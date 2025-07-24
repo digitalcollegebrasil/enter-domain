@@ -1,5 +1,5 @@
 
-# ![Capa](.github/capa.png)
+# ![Capa](.github/capa.jpg)
 
 # 🖥️ Script PowerShell: Adicionar Computador ao Domínio `DIGITALCOLLEGE.INTERNAL`
 
@@ -24,7 +24,7 @@ Este script PowerShell automatiza o processo de adicionar um computador ao domí
 📁 Projeto
 ├── enterdomain.ps1
 └── .github
-    └── capa.png
+    └── capa.jpg
 ```
 
 ---
