@@ -3,7 +3,7 @@ $domainPassword = ConvertTo-SecureString "" -AsPlainText -Force
 $domainCredential = New-Object System.Management.Automation.PSCredential ($domainUsername, $domainPassword)
 
 $computerName = $env:COMPUTERNAME
-$domainName = "DIGITALCOLLEGES.LOCAL"
+$domainName = "DIGITALCOLLEGE.INTERNAL"
 
 try {
     Add-Computer -ComputerName $computerName -DomainName $domainName -Credential $domainCredential -Restart -Force -ErrorAction Stop

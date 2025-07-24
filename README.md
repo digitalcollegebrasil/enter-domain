@@ -1,59 +1,98 @@
-**Adicionar Computador ao Domínio - PowerShell Script**
 
-Este script PowerShell permite adicionar um computador ao domínio da Digital College de forma automatizada. Ele é útil em ambientes corporativos onde é necessário integrar novos dispositivos à infraestrutura de rede existente.
+# ![Capa](.github/capa.png)
 
-### Requisitos
+# 🖥️ Script PowerShell: Adicionar Computador ao Domínio `DIGITALCOLLEGE.INTERNAL`
 
-- PowerShell instalado no computador local.
-- Permissões de administrador no computador local para adicionar o dispositivo ao domínio.
-- Credenciais válidas de administrador de domínio para autenticar a adição ao domínio.
-- Estar conectado na rede do acadêmico (Digital College - Acadêmico) ou do administrativo (Digital College - Administrativo)
+## 📄 Descrição
 
-### Como Usar
+Este script PowerShell automatiza o processo de adicionar um computador ao domínio **`DIGITALCOLLEGE.INTERNAL`**. Ele usa credenciais fornecidas para autenticação, tenta ingressar a máquina no domínio e reinicia o sistema em caso de sucesso.
 
-1. Abra o Bloco de Notas ou qualquer editor de texto de sua preferência.
-2. Cole o código do script PowerShell fornecido neste documento.
-3. Edite as variáveis `$domainUsername`, `$domainPassword` e `$domainName` com suas informações específicas de domínio.
-4. Salve o arquivo com a extensão ".ps1", por exemplo, "aldeota.ps1".
-5. Abra o PowerShell como administrador.
-6. Navegue até o diretório onde você salvou o script usando o comando `cd` (Change Directory).
-7. Execute o script digitando `.\aldeota.ps1` ou `.\sul.ps1` e pressione Enter.
+---
 
-### Detalhes do Script
+## 🧩 Requisitos
 
-- O script começa definindo as credenciais necessárias para autenticar no domínio especificado.
-- Em seguida, ele obtém o nome do computador local.
-- Depois, define o nome do domínio ao qual o computador será adicionado.
-- O script tenta adicionar o computador ao domínio usando as informações fornecidas.
-- Se a operação for bem-sucedida, uma mensagem de sucesso será exibida.
-- Caso contrário, uma mensagem de falha será exibida, juntamente com detalhes sobre o erro que ocorreu.
+* Executar com permissões de administrador
+* PowerShell 5.1 ou superior
+* A máquina deve estar conectada à rede do domínio
+* Conta de domínio com permissão para adicionar máquinas
 
-### Aviso
+---
 
-- Certifique-se de revisar e entender o script antes de executá-lo.
-- Certifique-se de ter permissões adequadas para adicionar o computador ao domínio.
-- Mantenha as credenciais de domínio seguras e não compartilhe-as em texto claro.
+## 📁 Estrutura
 
-### Exemplo
+```
+📁 Projeto
+├── enterdomain.ps1
+└── .github
+    └── capa.png
+```
+
+---
+
+## 💻 Código
 
 ```powershell
-# Definir as credenciais para autenticar no domínio
-$domainUsername = "LOGINDOALUNO"
-$domainPassword = ConvertTo-SecureString "Senha" -AsPlainText -Force
+$domainUsername = ""
+$domainPassword = ConvertTo-SecureString "" -AsPlainText -Force
 $domainCredential = New-Object System.Management.Automation.PSCredential ($domainUsername, $domainPassword)
 
-# Obter o nome do computador local
 $computerName = $env:COMPUTERNAME
+$domainName = "DIGITALCOLLEGE.INTERNAL"
 
-# Definir o nome do domínio
-$domainName = "DIGITALCOLLEGE.LOCAL"
-
-# Tentar adicionar o computador ao domínio
 try {
     Add-Computer -ComputerName $computerName -DomainName $domainName -Credential $domainCredential -Restart -Force -ErrorAction Stop
-    Write-Host "O computador foi adicionado ao domínio com sucesso."
+    Write-Host "O notebook foi adicionado ao domínio com sucesso."
 } catch {
-    Write-Host "Falha ao adicionar o computador ao domínio."
+    Write-Host "Falha ao adicionar o notebook ao domínio."
     Write-Host "Erro: $_"
 }
 ```
+
+---
+
+## ⚙️ Parâmetros
+
+| Variável            | Descrição                                                        |
+| ------------------- | ---------------------------------------------------------------- |
+| `$domainUsername`   | Nome de usuário do domínio (ex: `admin@digitalcollege.internal`) |
+| `$domainPassword`   | Senha do domínio convertida para `SecureString`                  |
+| `$domainCredential` | Objeto de credencial usado para autenticação                     |
+| `$computerName`     | Nome da máquina local                                            |
+| `$domainName`       | Nome do domínio a ser ingressado                                 |
+
+---
+
+## 🔐 Segurança
+
+* **⚠️ Nunca deixe as credenciais em branco em ambientes reais.**
+* Considere armazenar e recuperar as credenciais com o `Get-Credential` ou arquivos criptografados.
+
+---
+
+## 🚀 Execução
+
+1. Edite o script e preencha o `domainUsername` e `domainPassword`.
+2. Execute como administrador:
+
+   ```bash
+   powershell -ExecutionPolicy Bypass -File script.ps1
+   ```
+
+---
+
+## 🛠️ Resultado Esperado
+
+* Em caso de sucesso:
+
+  ```
+  O notebook foi adicionado ao domínio com sucesso.
+  ```
+
+  O computador será reiniciado automaticamente.
+
+* Em caso de erro:
+
+  ```
+  Falha ao adicionar o notebook ao domínio.
+  Erro: <mensagem de erro>
+  ```
